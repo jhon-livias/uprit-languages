@@ -8,7 +8,7 @@ export const Brand = ({ href = "/" }: BrandProps) => {
   return (
     <a
       href={href}
-      className="flex items-center gap-4 text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cta"
+      className="flex items-center gap-4 text-white h-[84px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cta"
     >
       <span className="flex flex-col">
         <span className="font-serif text-[2.15rem] leading-none font-bold tracking-[0.04em] md:text-[2.55rem]">

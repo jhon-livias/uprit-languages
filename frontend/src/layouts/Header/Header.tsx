@@ -19,14 +19,15 @@ type IconLinkProps = {
   href: string
   label: string
   children: ReactNode
+  className?: string
 }
 
 const iconBoxClass =
-  "grid size-9 place-items-center rounded-lg border border-white/90 text-white transition-colors duration-200 hover:bg-white hover:text-header focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta"
+  "grid place-items-center rounded-md border border-white/90 text-white transition-colors duration-200 hover:bg-white hover:text-header focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta"
 
-const IconLink = ({ href, label, children }: IconLinkProps) => {
+const IconLink = ({ href, label, children, className }: IconLinkProps) => {
   return (
-    <a href={href} aria-label={label} className={iconBoxClass}>
+    <a href={href} aria-label={label} className={clsx(iconBoxClass, className)}>
       {children}
     </a>
   )
@@ -37,16 +38,16 @@ const EnrollButton = ({ className }: { className?: string }) => {
     <a
       href={headerActions.enroll.href}
       className={clsx(
-        "inline-flex h-11 items-center gap-3 rounded-full bg-cta py-1 pr-1 pl-5 text-[12px] font-bold tracking-[0.06em] text-cta-fg uppercase transition duration-200 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+        "inline-flex h-[27px] max-h-[27px] items-center gap-2 rounded-full bg-cta py-0 pr-0.5 pl-3 text-[10px] font-bold tracking-[0.06em] text-cta-fg uppercase transition duration-200 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
         className,
       )}
     >
       {headerActions.enroll.label}
       <span
-        className="grid size-8 place-items-center rounded-full bg-header text-cta"
+        className="grid size-6 place-items-center rounded-full bg-header text-cta"
         aria-hidden="true"
       >
-        <ChevronIcon className="size-3.5" />
+        <ChevronIcon className="size-3" />
       </span>
     </a>
   )
@@ -107,31 +108,32 @@ export const Header = ({ activeHref = "/" }: HeaderProps) => {
       </a>
 
       <div className={`relative z-20 ${layoutContainerClass}`}>
-        <div className="flex items-center justify-between gap-4 py-2.5">
+        <div className="flex items-start justify-between gap-4 py-4">
           <Brand />
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex max-h-[27px] items-start justify-start gap-2.5">
             <EnrollButton className="hidden sm:inline-flex" />
-            <div className="hidden items-center gap-2 sm:flex">
-              <IconLink href={headerActions.home.href} label={headerActions.home.label}>
-                <HomeIcon className="size-4" />
+            <div className="hidden max-h-[27px] items-center gap-2 sm:flex">
+              <IconLink href={headerActions.home.href} label={headerActions.home.label} className="size-[27px]">
+                <HomeIcon className="h-[18px] w-[17px]" />
               </IconLink>
               <IconLink
                 href={headerActions.contact.href}
                 label={headerActions.contact.label}
+                className="size-[27px]"
               >
-                <MailIcon className="size-4" />
+                <MailIcon className="h-[18px] w-[17px]" />
               </IconLink>
             </div>
             <button
               type="button"
-              className={clsx(iconBoxClass, "lg:hidden")}
+              className={clsx(iconBoxClass, "size-[27px] lg:hidden")}
               aria-label={isMenuOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación"}
               aria-expanded={isMenuOpen}
               aria-controls={menuId}
               onClick={() => setIsMenuOpen((open) => !open)}
             >
-              {isMenuOpen ? <CloseIcon className="size-5" /> : <MenuIcon className="size-5" />}
+              {isMenuOpen ? <CloseIcon className="size-6" /> : <MenuIcon className="size-6" />}
             </button>
           </div>
         </div>
@@ -182,7 +184,7 @@ export const Header = ({ activeHref = "/" }: HeaderProps) => {
           <p className="text-sm tracking-[0.16em] uppercase">Menú</p>
           <button
             type="button"
-            className={iconBoxClass}
+            className={clsx(iconBoxClass, "size-9")}
             aria-label="Cerrar menú de navegación"
             onClick={() => setIsMenuOpen(false)}
           >
@@ -215,10 +217,10 @@ export const Header = ({ activeHref = "/" }: HeaderProps) => {
         </ul>
 
         <div className="mt-auto flex gap-2">
-          <IconLink href={headerActions.home.href} label={headerActions.home.label}>
+          <IconLink href={headerActions.home.href} label={headerActions.home.label} className="size-9">
             <HomeIcon className="size-[18px]" />
           </IconLink>
-          <IconLink href={headerActions.contact.href} label={headerActions.contact.label}>
+          <IconLink href={headerActions.contact.href} label={headerActions.contact.label} className="size-9">
             <MailIcon className="size-[18px]" />
           </IconLink>
         </div>
