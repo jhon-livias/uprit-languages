@@ -37,6 +37,9 @@ export const colors = {
   ctaFg: "#181818",
   footerLabel: "#919598",
   footerBar: "#20272F",
+  programKicker: "#7EAFC4",
+  programHeading: "#1D3557",
+  programOverlay: "#00C8D4",
 
   success: "#3EB75E",
   danger: "#FF0003",

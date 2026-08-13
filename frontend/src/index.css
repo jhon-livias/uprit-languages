@@ -46,6 +46,11 @@
   --color-footer-label: #919598;
   --color-footer-bar: #20272f;
 
+  /* Sección programas */
+  --color-program-kicker: #7eafc4;
+  --color-program-heading: #1d3557;
+  --color-program-overlay: #00c8d4;
+
   /* Semánticos */
   --color-success: #3eb75e;
   --color-danger: #ff0003;
