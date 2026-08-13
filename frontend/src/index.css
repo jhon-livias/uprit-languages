@@ -39,12 +39,12 @@
   --color-dark-heading: #ffffff;
   --color-dark-border: #282f3a;
 
-  /* Header */
-  --color-header: #081633;
-  --color-cta: #c5e000;
-  --color-cta-fg: #081633;
-  --color-footer-label: #7ec8e3;
-  --color-footer-bar: #050c19;
+  /* Header y footer institucionales */
+  --color-header: #91001e;
+  --color-cta: #f8b81f;
+  --color-cta-fg: #181818;
+  --color-footer-label: #919598;
+  --color-footer-bar: #20272f;
 
   /* Semánticos */
   --color-success: #3eb75e;

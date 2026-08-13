@@ -127,7 +127,7 @@ export const Header = ({ activeHref = "/" }: HeaderProps) => {
                     aria-current={isActive ? "page" : undefined}
                     className={clsx(
                       "inline-flex items-center text-[13px] leading-none font-semibold tracking-[0.16em] uppercase transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cta",
-                      isActive ? "text-cta" : "text-white hover:text-cta",
+                      isActive ? "text-secondary" : "text-white hover:text-secondary",
                     )}
                   >
                     {item.label}
@@ -182,7 +182,7 @@ export const Header = ({ activeHref = "/" }: HeaderProps) => {
                   aria-current={isActive ? "page" : undefined}
                   className={clsx(
                     "text-[13px] font-semibold tracking-[0.16em] uppercase",
-                    isActive ? "text-cta" : "text-white",
+                    isActive ? "text-secondary" : "text-white",
                   )}
                   onClick={() => setIsMenuOpen(false)}
                 >

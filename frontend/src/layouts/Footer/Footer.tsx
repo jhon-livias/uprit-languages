@@ -1,5 +1,4 @@
 import {
-  BookIcon,
   FacebookIcon,
   InstagramIcon,
   LinkedinIcon,
@@ -8,6 +7,7 @@ import {
 import { footerColumns, footerMeta, socialLinks } from "./footer-links"
 import { Brand } from "../Brand"
 import { layoutContainerClass } from "../container"
+import libroReclamaciones from "../../assets/libro-reclamaciones.png"
 
 const socialIcons = {
   facebook: FacebookIcon,
@@ -20,13 +20,13 @@ const ComplaintsBook = () => {
   return (
     <a
       href={footerMeta.complaintsHref}
-      className="inline-flex items-center gap-2 rounded-sm bg-white px-2.5 py-1.5 text-header transition-opacity duration-200 hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta"
+      className="shrink-0 transition-opacity duration-200 hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta"
     >
-      <BookIcon className="size-7 shrink-0" />
-      <span className="flex flex-col leading-tight">
-        <span className="text-[10px] font-semibold">Libro de</span>
-        <span className="text-[11px] font-bold">Reclamaciones</span>
-      </span>
+      <img
+        src={libroReclamaciones}
+        alt="Libro de Reclamaciones"
+        className="h-12 w-auto"
+      />
     </a>
   )
 }
@@ -35,7 +35,7 @@ export const Footer = () => {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="bg-header text-white">
+    <footer className="bg-dark-nav text-white">
       <div className={`${layoutContainerClass} flex flex-col items-center pt-12 pb-8`}>
         <Brand />
 
@@ -57,7 +57,7 @@ export const Footer = () => {
                     />
                     <a
                       href={link.href}
-                      className="text-[13px] leading-snug text-white transition-colors duration-200 hover:text-footer-label focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta"
+                      className="text-[13px] leading-snug text-white transition-colors duration-200 hover:text-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta"
                     >
                       {link.label}
                     </a>
@@ -85,7 +85,7 @@ export const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Síguenos en ${social.label}`}
-                    className="grid size-10 place-items-center rounded-full border border-white text-white transition-colors duration-200 hover:bg-white hover:text-header focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta"
+                    className="grid size-10 place-items-center rounded-full border border-white text-white transition-colors duration-200 hover:bg-white hover:text-dark-nav focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta"
                   >
                     <Icon className="size-4" />
                   </a>
@@ -97,16 +97,16 @@ export const Footer = () => {
       </div>
 
       <div className="bg-footer-bar">
-        <div
-          className={`${layoutContainerClass} relative flex flex-col items-center gap-4 py-4 md:flex-row md:justify-center`}
-        >
-          <p className="text-center text-[11px] leading-relaxed text-white md:px-28">
-            © Copyright - Centro de Idiomas de la Universidad Privada de Trujillo {year}{" "}
-            Universidad Privada de Trujillo / RUC: {footerMeta.ruc}
+        <div className="flex items-center justify-center gap-6 px-4 py-4">
+          <p className="flex flex-col items-center text-center text-xs leading-relaxed text-white/90">
+            <span>
+              © Copyright - Centro de Idiomas de la Universidad Privada de Trujillo {year}
+            </span>
+            <span>
+              Universidad Privada de Trujillo / RUC: {footerMeta.ruc}
+            </span>
           </p>
-          <div className="md:absolute md:top-1/2 md:right-0 md:-translate-y-1/2">
-            <ComplaintsBook />
-          </div>
+          <ComplaintsBook />
         </div>
       </div>
     </footer>
