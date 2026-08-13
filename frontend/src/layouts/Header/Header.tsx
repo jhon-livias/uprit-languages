@@ -108,10 +108,10 @@ export const Header = ({ activeHref = "/" }: HeaderProps) => {
       </a>
 
       <div className={`relative z-20 ${layoutContainerClass}`}>
-        <div className="flex items-center justify-between gap-3 py-3 sm:gap-4 sm:py-4">
+        <div className="flex items-center justify-between gap-3 py-3 sm:gap-4 sm:py-4 xl:items-start">
           <Brand />
 
-          <div className="flex shrink-0 items-center justify-start gap-2 sm:gap-2.5">
+          <div className="flex shrink-0 items-center justify-start gap-2 sm:gap-2.5 xl:items-start">
             <EnrollButton className="hidden xl:flex" />
             <div className="hidden items-center gap-2 xl:flex">
               <IconLink href={headerActions.home.href} label={headerActions.home.label} className="size-[27px]">
