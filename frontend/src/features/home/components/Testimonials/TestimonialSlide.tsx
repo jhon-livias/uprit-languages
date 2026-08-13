@@ -17,7 +17,7 @@ export const TestimonialSlide = ({
   onPlay,
 }: TestimonialSlideProps) => {
   return (
-    <article className="relative h-full shrink-0 px-1.5 md:px-2.5" style={{ width }}>
+    <article className="relative h-full shrink-0 px-1 sm:px-1.5 md:px-2.5" style={{ width }}>
       <div className="relative h-full overflow-hidden rounded-xl">
         {isActive && isPlaying && testimonial.youtubeId ? (
           <iframe
@@ -33,7 +33,7 @@ export const TestimonialSlide = ({
               src={testimonial.thumbnail}
               alt={isActive ? testimonial.thumbnailAlt : ""}
               draggable={false}
-              className="size-full object-cover object-center"
+              className="pointer-events-none size-full object-cover object-center [-webkit-user-drag:none]"
             />
             {isActive && (
               <button

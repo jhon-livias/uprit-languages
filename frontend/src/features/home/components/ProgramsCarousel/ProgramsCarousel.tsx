@@ -59,13 +59,14 @@ export const ProgramsCarousel = () => {
           aria-roledescription="carousel"
           aria-label="Programas del centro de idiomas"
           className={clsx(
-            "relative h-36 touch-pan-x overflow-hidden select-none sm:h-40 md:h-48 lg:h-[14vw] lg:max-h-[220px]",
-            isDragging ? "cursor-grabbing" : "cursor-grab",
+            "relative h-36 overflow-hidden select-none sm:h-40 md:h-48 lg:h-[14vw] lg:max-h-[220px]",
+            isDragging ? "cursor-grabbing touch-none" : "cursor-grab touch-pan-y",
           )}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerCancel}
+          onLostPointerCapture={handlePointerCancel}
           onClickCapture={suppressClickIfDragged}
         >
           {cardSpan > 0 && (

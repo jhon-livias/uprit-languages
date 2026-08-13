@@ -62,6 +62,7 @@ export const useDragCarousel = ({
   const isAnimatingRef = useRef(false)
   const didDragRef = useRef(false)
   const dragStartXRef = useRef(0)
+  const dragStartYRef = useRef(0)
   const dragStartOffsetRef = useRef(0)
   const dragStartedAtRef = useRef(0)
   const reduceMotionRef = useRef(false)
@@ -162,6 +163,24 @@ export const useDragCarousel = ({
     return () => observer.disconnect()
   }, [itemCount])
 
+  useEffect(() => {
+    const viewport = viewportRef.current
+
+    if (!viewport) {
+      return
+    }
+
+    const preventScrollWhileDragging = (event: TouchEvent) => {
+      if (isDraggingRef.current) {
+        event.preventDefault()
+      }
+    }
+
+    viewport.addEventListener("touchmove", preventScrollWhileDragging, { passive: false })
+
+    return () => viewport.removeEventListener("touchmove", preventScrollWhileDragging)
+  }, [])
+
   const goToNext = useCallback(() => {
     if (isDraggingRef.current || isPointerDownRef.current || isAnimatingRef.current || cardSpanRef.current === 0) {
       return
@@ -245,6 +264,10 @@ export const useDragCarousel = ({
       return
     }
 
+    if ((event.target as HTMLElement).closest("button")) {
+      return
+    }
+
     const viewport = viewportRef.current
     const track = viewport?.firstElementChild
 
@@ -266,6 +289,7 @@ export const useDragCarousel = ({
     isDraggingRef.current = false
     didDragRef.current = false
     dragStartXRef.current = event.clientX
+    dragStartYRef.current = event.clientY
     dragStartOffsetRef.current = offsetRef.current
     dragStartedAtRef.current = Date.now()
   }
@@ -275,10 +299,16 @@ export const useDragCarousel = ({
       return
     }
 
-    const delta = event.clientX - dragStartXRef.current
+    const deltaX = event.clientX - dragStartXRef.current
+    const deltaY = event.clientY - dragStartYRef.current
 
     if (!isDraggingRef.current) {
-      if (Math.abs(delta) < DRAG_CLICK_THRESHOLD_PX) {
+      if (Math.hypot(deltaX, deltaY) < DRAG_CLICK_THRESHOLD_PX) {
+        return
+      }
+
+      if (Math.abs(deltaY) > Math.abs(deltaX)) {
+        isPointerDownRef.current = false
         return
       }
 
@@ -286,15 +316,14 @@ export const useDragCarousel = ({
       didDragRef.current = true
       setIsDragging(true)
       setEnableTransition(false)
-      event.preventDefault()
       event.currentTarget.setPointerCapture(event.pointerId)
     }
 
-    if (Math.abs(delta) > DRAG_CLICK_THRESHOLD_PX) {
+    if (Math.abs(deltaX) > DRAG_CLICK_THRESHOLD_PX) {
       didDragRef.current = true
     }
 
-    let next = dragStartOffsetRef.current + delta
+    let next = dragStartOffsetRef.current + deltaX
     const wrapped = wrapToMiddle(next, cardSpanRef.current)
 
     if (Math.abs(wrapped - next) > 0.5) {
@@ -425,6 +454,7 @@ export const useDragCarousel = ({
     handlePointerMove,
     handlePointerUp: finishDrag,
     handlePointerCancel: finishDrag,
+    handleLostPointerCapture: finishDrag,
     handleTransitionEnd,
     suppressClickIfDragged,
   }

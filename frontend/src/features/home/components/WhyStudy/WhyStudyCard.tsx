@@ -28,8 +28,8 @@ export const WhyStudyCard = ({ item, width, paintId }: WhyStudyCardProps) => {
   return (
     <article className="relative h-full shrink-0 px-2 pt-2 sm:px-3 md:px-4" style={{ width }}>
       <div className="relative h-full pt-8 sm:pt-9">
-        <div className="absolute top-0 left-5 z-10 flex h-14 w-16 items-center justify-center bg-white sm:left-7 sm:h-[4.35rem] sm:w-[4.85rem]">
-          <Icon className="size-12 sm:size-[3.6rem]" paintId={paintId} />
+        <div className="pointer-events-none absolute top-0 left-5 z-10 flex h-14 w-16 items-center justify-center bg-white sm:left-7 sm:h-[4.35rem] sm:w-[4.85rem]">
+          <Icon className="pointer-events-none size-12 sm:size-[3.6rem]" paintId={paintId} />
         </div>
         <div
           className={clsx(
