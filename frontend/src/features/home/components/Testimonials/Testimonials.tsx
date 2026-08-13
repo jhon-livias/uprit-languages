@@ -1,34 +1,64 @@
-import { useCallback, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
+import clsx from "clsx"
+import { LOOP_COPIES, useDragCarousel } from "../../hooks/useDragCarousel"
 import { ChevronLeftIcon, ChevronRightIcon } from "./icons"
 import { TestimonialSlide } from "./TestimonialSlide"
 import { testimonials } from "./items"
 
-const wrapIndex = (index: number, length: number) => {
-  return ((index % length) + length) % length
+const AUTO_PLAY_MS = 20_000
+
+const getVisibleCount = (width: number) => {
+  if (width < 768) {
+    return 1.35
+  }
+
+  return 1.85
 }
 
 export const Testimonials = () => {
-  const [activeIndex, setActiveIndex] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
-  const lastIndex = testimonials.length - 1
+  const {
+    viewportRef,
+    offset,
+    cardSpan,
+    activeIndex,
+    translateOffset,
+    enableTransition,
+    isDragging,
+    goToNext,
+    goToPrevious,
+    handlePointerDown,
+    handlePointerMove,
+    handlePointerUp,
+    handlePointerCancel,
+    handleTransitionEnd,
+    suppressClickIfDragged,
+  } = useDragCarousel({
+    itemCount: testimonials.length,
+    autoPlayMs: AUTO_PLAY_MS,
+    isPaused: isPlaying,
+    getVisibleCount,
+    centered: true,
+  })
+
   const active = testimonials[activeIndex]
-  const previous = testimonials[wrapIndex(activeIndex - 1, testimonials.length)]
-  const next = testimonials[wrapIndex(activeIndex + 1, testimonials.length)]
 
-  const goTo = useCallback((index: number) => {
+  const trackItems = useMemo(
+    () =>
+      Array.from({ length: LOOP_COPIES }, (_, copyIndex) =>
+        testimonials.map((item) => ({
+          ...item,
+          key: `${item.id}-copy-${copyIndex}`,
+        })),
+      ).flat(),
+    [],
+  )
+
+  useEffect(() => {
     setIsPlaying(false)
-    setActiveIndex(wrapIndex(index, testimonials.length))
-  }, [])
+  }, [activeIndex])
 
-  const goToPrevious = () => {
-    goTo(activeIndex === 0 ? lastIndex : activeIndex - 1)
-  }
-
-  const goToNext = () => {
-    goTo(activeIndex === lastIndex ? 0 : activeIndex + 1)
-  }
-
-  if (!active || !previous || !next) {
+  if (!active) {
     return null
   }
 
@@ -47,39 +77,54 @@ export const Testimonials = () => {
         </h2>
 
         <div className="relative">
-          <div className="grid h-[200px] grid-cols-[1fr_minmax(0,1.7fr)_1fr] items-stretch gap-3 overflow-hidden md:h-[280px] md:gap-5 lg:h-[320px]">
-            <TestimonialSlide
-              testimonial={previous}
-              variant="peek-left"
-              isPlaying={false}
-              onPlay={() => undefined}
-              onSelect={() => goTo(activeIndex - 1)}
-            />
-            <TestimonialSlide
-              testimonial={active}
-              variant="active"
-              isPlaying={isPlaying}
-              onPlay={() => {
-                if (active.youtubeId) {
-                  setIsPlaying(true)
-                }
-              }}
-              onSelect={() => undefined}
-            />
-            <TestimonialSlide
-              testimonial={next}
-              variant="peek-right"
-              isPlaying={false}
-              onPlay={() => undefined}
-              onSelect={() => goTo(activeIndex + 1)}
-            />
+          <div
+            ref={viewportRef}
+            className={clsx(
+              "relative h-[200px] touch-pan-x overflow-hidden select-none md:h-[280px] lg:h-[320px]",
+              isDragging ? "cursor-grabbing" : "cursor-grab",
+            )}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerCancel}
+            onClickCapture={suppressClickIfDragged}
+          >
+            {cardSpan > 0 && (
+              <div
+                className={clsx(
+                  "flex h-full will-change-transform motion-reduce:transition-none",
+                  enableTransition && "transition-transform duration-700 ease-in-out",
+                )}
+                style={{ transform: `translate3d(${translateOffset}px, 0, 0)` }}
+                onTransitionEnd={handleTransitionEnd}
+              >
+                {trackItems.map((item, trackPosition) => {
+                  const isActive = Math.round(-offset / cardSpan) === trackPosition
+
+                  return (
+                    <TestimonialSlide
+                      key={item.key}
+                      testimonial={item}
+                      width={cardSpan}
+                      isActive={isActive}
+                      isPlaying={isPlaying && isActive}
+                      onPlay={() => {
+                        if (item.youtubeId) {
+                          setIsPlaying(true)
+                        }
+                      }}
+                    />
+                  )
+                })}
+              </div>
+            )}
           </div>
 
           <button
             type="button"
             aria-label="Testimonio anterior"
             onClick={goToPrevious}
-            className="absolute top-1/2 left-[14%] z-10 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-heading shadow-md transition-opacity duration-200 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta md:left-[16%]"
+            className="absolute top-1/2 left-[1%] z-10 grid size-10 -translate-y-1/2 cursor-pointer place-items-center rounded-full bg-white/90 text-heading shadow-md transition-opacity duration-200 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta md:left-[1%]"
           >
             <ChevronLeftIcon className="size-5" />
           </button>
@@ -87,7 +132,7 @@ export const Testimonials = () => {
             type="button"
             aria-label="Testimonio siguiente"
             onClick={goToNext}
-            className="absolute top-1/2 right-[14%] z-10 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-heading shadow-md transition-opacity duration-200 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta md:right-[16%]"
+            className="absolute top-1/2 right-[1%] z-10 grid size-10 -translate-y-1/2 cursor-pointer place-items-center rounded-full bg-white/90 text-heading shadow-md transition-opacity duration-200 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta md:right-[1%]"
           >
             <ChevronRightIcon className="size-5" />
           </button>

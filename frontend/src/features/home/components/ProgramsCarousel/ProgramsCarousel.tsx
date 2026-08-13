@@ -2,7 +2,7 @@ import { useMemo } from "react"
 import clsx from "clsx"
 import { ProgramCard } from "./ProgramCard"
 import { programSlides } from "./programs"
-import { LOOP_COPIES, useDragCarousel } from "./useDragCarousel"
+import { LOOP_COPIES, useDragCarousel } from "../../hooks/useDragCarousel"
 
 const AUTO_PLAY_MS = 5_000
 

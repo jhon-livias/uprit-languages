@@ -13,7 +13,9 @@ export const ProgramCard = ({ title, href, src, alt, width }: ProgramCardProps) 
   return (
     <a
       href={href}
-      className="group relative block h-full shrink-0 overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-cta"
+      draggable={false}
+      onDragStart={(event) => event.preventDefault()}
+      className="group relative block h-full shrink-0 overflow-hidden [-webkit-user-drag:none] focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-cta"
       style={{ width }}
     >
       <img src={src} alt={alt} draggable={false} className="size-full object-cover object-center" />
