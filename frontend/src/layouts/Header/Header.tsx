@@ -1,4 +1,4 @@
-import { useEffect, useId, useState, type ReactNode } from "react"
+import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from "react"
 import clsx from "clsx"
 import { Brand } from "../Brand"
 import { layoutContainerClass } from "../container"
@@ -54,7 +54,27 @@ const EnrollButton = ({ className }: { className?: string }) => {
 
 export const Header = ({ activeHref = "/" }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [headerHeight, setHeaderHeight] = useState(0)
+  const headerRef = useRef<HTMLElement>(null)
   const menuId = useId()
+
+  useLayoutEffect(() => {
+    const header = headerRef.current
+
+    if (!header) {
+      return
+    }
+
+    const updateHeight = () => {
+      setHeaderHeight(header.getBoundingClientRect().height)
+    }
+
+    updateHeight()
+    const observer = new ResizeObserver(updateHeight)
+    observer.observe(header)
+
+    return () => observer.disconnect()
+  }, [])
 
   useEffect(() => {
     if (!isMenuOpen) {
@@ -77,7 +97,8 @@ export const Header = ({ activeHref = "/" }: HeaderProps) => {
   }, [isMenuOpen])
 
   return (
-    <header className="sticky top-0 z-50 bg-header text-white">
+    <>
+      <header ref={headerRef} className="fixed inset-x-0 top-0 z-50 bg-header text-white">
       <a
         href="#contenido"
         className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-[60] focus:rounded-md focus:bg-cta focus:px-3 focus:py-2 focus:text-cta-fg"
@@ -202,6 +223,8 @@ export const Header = ({ activeHref = "/" }: HeaderProps) => {
           </IconLink>
         </div>
       </nav>
-    </header>
+      </header>
+      <div className="shrink-0" style={{ height: headerHeight }} aria-hidden="true" />
+    </>
   )
 }
