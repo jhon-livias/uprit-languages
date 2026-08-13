@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@theme {
+  /* Marca UPRIT */
+  --color-primary: #91001e;
+  --color-primary-dark: #6b0015;
+  --color-primary-darker: #58141d;
+  --color-primary-deep: #520012;
+  --color-secondary: #ee4a62;
+  --color-secondary-hover: #d93d55;
+  --color-secondary-soft: #ffd9de;
+  --color-text-secondary: #ff5b5c;
+  --color-tertiary: #f8b81f;
+
+  /* Neutros */
+  --color-dark: #111212;
+  --color-heading: #181818;
+  --color-body: #808080;
+  --color-title: #bababa;
+  --color-placeholder: #808080;
+  --color-border: #e5e5e5;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* Superficies claras */
+  --color-bg: #eaf0f2;
+  --color-bg-cta: #f0f4f5;
+  --color-bg-body: #ffffff;
+  --color-lighten-01: #f0f4f5;
+  --color-lighten-02: #edf5f8;
+  --color-lighten-03: #f5f1eb;
+  --color-lighten-04: #f7f5f2;
+
+  /* Superficies oscuras */
+  --color-dark-bg: #020b17;
+  --color-dark-body: #111822;
+  --color-dark-surface: #1c242f;
+  --color-dark-nav: #20272f;
+  --color-dark-heading: #ffffff;
+  --color-dark-border: #282f3a;
+
+  /* Header */
+  --color-header: #081633;
+  --color-cta: #c5e000;
+  --color-cta-fg: #081633;
+  --color-footer-label: #7ec8e3;
+  --color-footer-bar: #050c19;
+
+  /* Semánticos */
+  --color-success: #3eb75e;
+  --color-danger: #ff0003;
+  --color-warning: #ff8f3c;
+  --color-info: #1ba2db;
+
+  /* Tipografía institucional */
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Spartan", "League Spartan", sans-serif;
+  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+
+  /* Radios institucionales */
+  --radius-sm: 4px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+}

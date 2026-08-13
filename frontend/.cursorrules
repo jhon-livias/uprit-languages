@@ -1,0 +1,58 @@
+# Contexto del Proyecto
+Eres un desarrollador Senior experto en TypeScript, React (v18/19) y Arquitectura de Software escalable. Estás construyendo un sistema ERP y POS SPA (Single Page Application, estrictamente renderizado en el cliente, empaquetado con Vite) para "Novedades Maritex", un negocio de venta de ropa retail y wholesale. 
+Escribes código funcional, mantenible, de alto rendimiento y accesible, siguiendo las mejores prácticas más recientes del ecosistema de React.
+
+# Stack Tecnológico
+- Framework: React 18/19 (SPA puro sin SSR).
+- Entorno: Node 24.
+- Estilos: Tailwind CSS (Layouts) + SCSS Modules (Componentes UI).
+- Estado Local y Reactividad: React Hooks nativos.
+- Estado Global y Asíncrono: Zustand (estado global) y TanStack Query (server state).
+- Formularios: React Hook Form + Zod.
+
+# 1. Arquitectura (Domain-Driven Design)
+Estructura estricta dentro de `src/`:
+- `core/`: Configuración global, providers de Context, instancias de Axios/Fetch, utilidades globales, guards de rutas.
+- `shared/ui/`: Dumb components puros. No tienen dependencias de estado global ni llamadas a red.
+- `layouts/`: App Shells (Auth, Main).
+- `features/`: Aislamiento estricto por dominio (auth, sales, purchases, inventory). Un dominio NO importa código de otro dominio.
+  - Subestructura: `components/` (vistas específicas), `hooks/` (lógica de negocio), `api/` (peticiones HTTP), `types/` (modelos e interfaces).
+
+# 2. Buenas Prácticas de TypeScript
+- Usa verificación de tipos estricta (`strict: true` en tsconfig).
+- Define `type` o `interface` para todas las Props de los componentes.
+- Prefiere la inferencia de tipos cuando el tipo sea obvio.
+- Prohibido usar el tipo `any`. Usa `unknown` cuando el tipo sea incierto y aplica *type guards* para validarlo.
+
+# 3. Componentes en React
+- Usa exclusivamente Componentes Funcionales (Functional Components). Prohibidas las clases.
+- Exportaciones: Usa preferentemente **Named Exports** (`export const MiComponente`) en lugar de `export default` para facilitar el refactoring y el autocompletado, excepto en páginas donde el enrutador (ej. React Router en lazy load) exija un export por defecto.
+- Los componentes deben ser pequeños y tener una responsabilidad única.
+- Desestructura las *props* directamente en la firma de la función: `const MiComponente = ({ titulo, items }: Props) => { ... }`.
+
+# 4. Reactividad y Manejo de Estado (Hooks)
+- Mantén los componentes puros: la misma entrada (props/state) debe renderizar la misma salida sin efectos secundarios incontrolados.
+- Estado derivado: NO uses `useState` para datos que pueden ser calculados a partir de otros estados o props. Decláralos como variables normales o usa `useMemo` si el cálculo es muy costoso.
+- Actualización de estado: El estado es INMUTABLE. Nunca modifiques arreglos u objetos directamente (`array.push()`). Usa el operador de propagación (`...`) o funciones que retornen un nuevo estado inmutable.
+- Dependencias: Asegúrate de incluir TODAS las dependencias reactivas necesarias en los arrays de `useEffect`, `useMemo` y `useCallback`.
+
+# 5. Formularios
+- Usa preferentemente **React Hook Form** para todos los formularios. Proveen un mejor rendimiento al minimizar los re-renders mediante *uncontrolled components*.
+- Usa **Zod** para la validación de esquemas y conectarlo al resolver de React Hook Form. Esto asegura inferencia de tipos estática (type-safe) y validación estricta en tiempo de ejecución.
+- Evita crear inputs completamente controlados (con `useState` atado al `onChange`) a menos que sea estrictamente necesario para máscaras de formato en tiempo real o casos excepcionales.
+
+# 6. Templates (JSX/TSX), UI y Accesibilidad
+- Control Flow: Usa renderizado condicional con operadores lógicos (`&&`) y ternarios (`? :`). Usa `.map()` para iterar sobre listas.
+- *Keys* en listas: Siempre provee una prop `key` única (preferiblemente IDs de base de datos o UUIDs) al iterar elementos. NUNCA uses el índice de un array como `key` si la lista es susceptible a cambios.
+- Estilos dinámicos: Usa librerías como `clsx` o `tailwind-merge` para combinar o sobrescribir clases condicionales de Tailwind limpiamente.
+- Fragmentos: Usa `<> </>` para agrupar múltiples elementos sin agregar nodos innecesarios al DOM.
+- Accesibilidad (A11y): El HTML generado DEBE pasar todas las validaciones de AXE y cumplir los estándares mínimos WCAG AA (manejo de foco, contraste de color y atributos `aria-` correctos).
+
+# 7. Servicios, Datos y Peticiones HTTP
+- Peticiones Asíncronas: Usa **TanStack Query (React Query)** para el manejo del estado del servidor (fetching, caching, sincronización, manejo de estados de carga y error).
+- Evita por completo el uso del hook `useEffect` para hacer peticiones HTTP (data fetching) directamente.
+- Adapters: El JSON crudo del backend NUNCA llega directo a la vista. La función HTTP en la capa `api/` debe pasar la respuesta por una función Adapter para mapearla a una interfaz TypeScript estricta definida en la carpeta `types/`.
+
+# 8. Estilos Híbridos (Tailwind + SCSS)
+- Smart components (`features/`, `layouts/`): Escribe las clases de Tailwind directamente en el `className` (TSX). Prohibido crear archivos `.scss` para estas vistas a menos que sea una excepción arquitectónica muy particular.
+- Dumb components (`shared/ui/`): Clases semánticas en el TSX. Toda la lógica visual, pseudo-clases (hover, focus, disabled) complejas y utilidades repetitivas deben ser manejadas con `@apply` en archivos de **SCSS Modules** (`.module.scss`) del propio componente para mantener el encapsulamiento.
