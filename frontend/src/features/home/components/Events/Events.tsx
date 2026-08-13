@@ -16,7 +16,7 @@ export const Events = () => {
           id="eventos-heading"
           className="mb-10 text-center font-heading text-[1.75rem] font-bold text-secondary md:mb-12 md:text-[2.15rem]"
         >
-          UPRITeventos
+          UPRIT Eventos
         </h2>
 
         <div className="grid grid-cols-1 gap-5 lg:h-[36rem] lg:grid-cols-2 lg:grid-rows-2">
