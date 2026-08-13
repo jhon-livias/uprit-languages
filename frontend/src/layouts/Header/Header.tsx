@@ -22,7 +22,7 @@ type IconLinkProps = {
 }
 
 const iconBoxClass =
-  "grid size-10 place-items-center rounded-[5px] border border-white text-white transition-colors duration-200 hover:bg-white hover:text-header focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta"
+  "grid size-9 place-items-center rounded-lg border border-white/90 text-white transition-colors duration-200 hover:bg-white hover:text-header focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta"
 
 const IconLink = ({ href, label, children }: IconLinkProps) => {
   return (
@@ -37,13 +37,13 @@ const EnrollButton = ({ className }: { className?: string }) => {
     <a
       href={headerActions.enroll.href}
       className={clsx(
-        "inline-flex h-10 items-center gap-3 rounded-full bg-cta pr-1.5 pl-5 text-[13px] font-bold tracking-[0.08em] text-cta-fg uppercase transition duration-200 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+        "inline-flex h-11 items-center gap-3 rounded-full bg-cta py-1 pr-1 pl-5 text-[12px] font-bold tracking-[0.06em] text-cta-fg uppercase transition duration-200 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
         className,
       )}
     >
       {headerActions.enroll.label}
       <span
-        className="grid size-7 place-items-center rounded-full bg-header text-white"
+        className="grid size-8 place-items-center rounded-full bg-header text-cta"
         aria-hidden="true"
       >
         <ChevronIcon className="size-3.5" />
@@ -89,17 +89,17 @@ export const Header = ({ activeHref = "/" }: HeaderProps) => {
         <div className="flex items-center justify-between gap-4 py-2.5">
           <Brand />
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             <EnrollButton className="hidden sm:inline-flex" />
             <div className="hidden items-center gap-2 sm:flex">
               <IconLink href={headerActions.home.href} label={headerActions.home.label}>
-                <HomeIcon className="size-[18px]" />
+                <HomeIcon className="size-4" />
               </IconLink>
               <IconLink
                 href={headerActions.contact.href}
                 label={headerActions.contact.label}
               >
-                <MailIcon className="size-[18px]" />
+                <MailIcon className="size-4" />
               </IconLink>
             </div>
             <button
