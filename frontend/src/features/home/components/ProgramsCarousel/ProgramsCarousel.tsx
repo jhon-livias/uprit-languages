@@ -45,7 +45,7 @@ export const ProgramsCarousel = () => {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto w-[90%] max-w-[1440px]">
+      <div className="relative mx-auto w-[70%]">
         <h2
           id="programas-heading"
           className="relative mb-8 text-center font-heading text-[1.15rem] tracking-[0.14em] uppercase md:mb-10 md:text-[1.4rem]"
@@ -59,7 +59,7 @@ export const ProgramsCarousel = () => {
           aria-roledescription="carousel"
           aria-label="Programas del centro de idiomas"
           className={clsx(
-            "relative h-[190px] touch-pan-x overflow-hidden select-none sm:h-[230px] md:h-[270px] lg:h-[310px]",
+            "relative h-[14vw] touch-pan-x overflow-hidden select-none",
             isDragging ? "cursor-grabbing" : "cursor-grab",
           )}
           onPointerDown={handlePointerDown}
