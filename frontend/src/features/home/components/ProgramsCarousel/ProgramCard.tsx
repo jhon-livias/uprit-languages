@@ -7,7 +7,7 @@ type ProgramCardProps = {
 }
 
 const titleClass =
-  "font-heading text-center text-[0.8rem] leading-snug font-semibold tracking-[0.06em] text-white uppercase sm:text-[0.88rem] md:text-[0.95rem] lg:text-[1.02rem]"
+  "font-heading text-center text-[0.72rem] leading-snug font-semibold tracking-[0.06em] text-white uppercase sm:text-[0.88rem] md:text-[0.95rem] lg:text-[1.02rem]"
 
 export const ProgramCard = ({ title, href, src, alt, width }: ProgramCardProps) => {
   return (
@@ -22,13 +22,13 @@ export const ProgramCard = ({ title, href, src, alt, width }: ProgramCardProps) 
       <span className="absolute inset-0 bg-black/25" aria-hidden="true" />
 
       <span
-        className="absolute inset-0 flex items-center justify-center px-4 transition-opacity duration-500 ease-out group-hover:opacity-0 group-focus-visible:opacity-0 motion-reduce:transition-none"
+        className="absolute inset-0 flex items-center justify-center px-2 transition-opacity duration-500 ease-out group-hover:opacity-0 group-focus-visible:opacity-0 motion-reduce:transition-none sm:px-4"
       >
         <span className={titleClass}>{title}</span>
       </span>
 
       <span
-        className="absolute inset-x-0 bottom-0 flex h-[38%] items-center justify-center bg-program-overlay/80 px-4 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none"
+        className="absolute inset-x-0 bottom-0 flex h-[38%] items-center justify-center bg-primary/85 px-2 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none sm:px-4"
         aria-hidden="true"
       >
         <span className={titleClass}>{title}</span>

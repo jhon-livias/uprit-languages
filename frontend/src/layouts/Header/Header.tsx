@@ -108,10 +108,10 @@ export const Header = ({ activeHref = "/" }: HeaderProps) => {
       </a>
 
       <div className={`relative z-20 ${layoutContainerClass}`}>
-        <div className="flex items-start justify-between gap-4 py-4">
+        <div className="flex items-center justify-between gap-3 py-3 sm:items-start sm:gap-4 sm:py-4">
           <Brand />
 
-          <div className="flex max-h-[27px] items-start justify-start gap-2.5">
+          <div className="flex max-h-[27px] shrink-0 items-center justify-start gap-2 sm:items-start sm:gap-2.5">
             <EnrollButton className="hidden sm:inline-flex" />
             <div className="hidden max-h-[27px] items-center gap-2 sm:flex">
               <IconLink href={headerActions.home.href} label={headerActions.home.label} className="size-[27px]">
@@ -127,19 +127,19 @@ export const Header = ({ activeHref = "/" }: HeaderProps) => {
             </div>
             <button
               type="button"
-              className={clsx(iconBoxClass, "size-[27px] lg:hidden")}
+              className={clsx(iconBoxClass, "size-[27px] xl:hidden")}
               aria-label={isMenuOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación"}
               aria-expanded={isMenuOpen}
               aria-controls={menuId}
               onClick={() => setIsMenuOpen((open) => !open)}
             >
-              {isMenuOpen ? <CloseIcon className="size-6" /> : <MenuIcon className="size-6" />}
+              {isMenuOpen ? <CloseIcon className="size-4" /> : <MenuIcon className="size-4" />}
             </button>
           </div>
         </div>
 
-        <nav aria-label="Principal" className="hidden h-12 items-center justify-center lg:flex">
-          <ul className="flex flex-nowrap items-center justify-center gap-x-8 whitespace-nowrap xl:gap-x-10">
+        <nav aria-label="Principal" className="hidden h-12 items-center justify-center xl:flex">
+          <ul className="flex flex-nowrap items-center justify-center gap-x-6 whitespace-nowrap 2xl:gap-x-10">
             {navItems.map((item) => {
               const isActive = activeHref === item.href
 
@@ -165,7 +165,7 @@ export const Header = ({ activeHref = "/" }: HeaderProps) => {
       {isMenuOpen && (
         <button
           type="button"
-          className="fixed inset-0 z-10 cursor-default bg-black/50 lg:hidden"
+          className="fixed inset-0 z-10 cursor-default bg-black/50 xl:hidden"
           aria-label="Cerrar menú de navegación"
           onClick={() => setIsMenuOpen(false)}
         />
@@ -176,7 +176,7 @@ export const Header = ({ activeHref = "/" }: HeaderProps) => {
         aria-label="Móvil"
         inert={!isMenuOpen}
         className={clsx(
-          "fixed top-0 right-0 z-30 flex h-full w-[min(22rem,100%)] flex-col gap-6 bg-header px-6 py-6 shadow-2xl transition-transform duration-300 lg:hidden",
+          "fixed top-0 right-0 z-30 flex h-full w-[min(22rem,100%)] flex-col gap-6 bg-header px-5 py-6 shadow-2xl transition-transform duration-300 sm:px-6 xl:hidden",
           isMenuOpen ? "translate-x-0" : "pointer-events-none translate-x-full",
         )}
       >

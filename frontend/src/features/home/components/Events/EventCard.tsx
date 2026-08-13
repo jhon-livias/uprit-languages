@@ -14,8 +14,8 @@ export const EventCard = ({ event, variant }: EventCardProps) => {
       href={event.href}
       aria-label={`Conocer más sobre ${event.title}`}
       className={clsx(
-        "group flex h-full overflow-hidden rounded-[1.75rem] bg-secondary text-white shadow-[0_8px_24px_rgba(238,74,98,0.18)] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cta",
-        isFeatured ? "min-h-[26rem] flex-col lg:min-h-0" : "min-h-[13.5rem] flex-col sm:flex-row",
+        "group flex h-full overflow-hidden rounded-[1.75rem] bg-primary text-white shadow-[0_8px_24px_rgba(238,74,98,0.18)] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cta",
+        isFeatured ? "min-h-[22rem] flex-col md:min-h-0" : "min-h-0 flex-col sm:min-h-[13.5rem] sm:flex-row",
       )}
     >
       <img
@@ -23,18 +23,20 @@ export const EventCard = ({ event, variant }: EventCardProps) => {
         alt={event.imageAlt}
         className={clsx(
           "object-cover object-center",
-          isFeatured ? "h-1/2 min-h-[12rem] w-full flex-1" : "h-40 w-full sm:h-auto sm:w-[42%] sm:flex-none",
+          isFeatured
+            ? "h-[11rem] w-full md:h-auto md:min-h-0 md:flex-1"
+            : "h-40 w-full shrink-0 sm:h-[13.5rem] sm:w-[42%] md:h-full",
         )}
       />
-      <div className="flex flex-1 flex-col px-5 py-5 md:px-6 md:py-6">
+      <div className="flex flex-1 flex-col px-4 py-4 sm:px-5 sm:py-5 md:px-6 md:py-6">
         <time
           dateTime={event.date}
-          className="inline-flex w-fit rounded-lg bg-white px-3 py-1 font-heading text-[0.68rem] font-bold tracking-[0.06em] text-heading uppercase"
+          className="inline-flex w-fit rounded-lg bg-white px-3 py-1 font-heading text-[0.65rem] font-bold tracking-[0.06em] text-heading uppercase sm:text-[0.68rem]"
         >
           {formatEventDate(event.date)}
         </time>
-        <h3 className="mt-3 font-heading text-[1.15rem] leading-tight font-bold md:text-[1.35rem]">{event.title}</h3>
-        <span className="mt-auto inline-flex h-10 w-fit items-center justify-center self-center rounded-full border-2 border-white px-6 text-sm font-semibold transition-colors duration-200 group-hover:bg-white group-hover:text-secondary">
+        <h3 className="mt-3 font-heading text-[1.05rem] leading-tight font-bold sm:text-[1.15rem] md:text-[1.35rem]">{event.title}</h3>
+        <span className="mt-4 inline-flex h-9 w-fit items-center justify-center self-center rounded-full border-2 border-white px-5 text-xs font-semibold transition-colors duration-200 group-hover:bg-white group-hover:text-primary sm:mt-auto sm:h-10 sm:px-6 sm:text-sm">
           Conocer más
         </span>
       </div>

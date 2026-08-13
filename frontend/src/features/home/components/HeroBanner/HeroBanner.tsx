@@ -204,7 +204,7 @@ export const HeroBanner = () => {
       <div
         ref={viewportRef}
         className={clsx(
-          "relative h-[420px] touch-pan-x overflow-hidden select-none md:h-[480px] lg:h-[520px]",
+          "relative h-[240px] touch-pan-x overflow-hidden select-none sm:h-[320px] md:h-[440px] lg:h-[520px]",
           isDragging ? "cursor-grabbing" : "cursor-grab",
         )}
         onPointerDown={handlePointerDown}
@@ -237,22 +237,22 @@ export const HeroBanner = () => {
           ))}
         </div>
 
-        <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-between px-3 md:px-5">
+        <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-between px-2 sm:px-3 md:px-5">
           <button
             type="button"
             aria-label="Imagen anterior"
             onClick={goToPrevious}
-            className="pointer-events-auto grid size-10 cursor-pointer place-items-center text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] transition-opacity duration-200 hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta"
+            className="pointer-events-auto grid size-8 cursor-pointer place-items-center text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] transition-opacity duration-200 hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta sm:size-10"
           >
-            <ChevronLeftIcon className="size-8" />
+            <ChevronLeftIcon className="size-6 sm:size-8" />
           </button>
           <button
             type="button"
             aria-label="Imagen siguiente"
             onClick={goToNext}
-            className="pointer-events-auto grid size-10 cursor-pointer place-items-center text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] transition-opacity duration-200 hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta"
+            className="pointer-events-auto grid size-8 cursor-pointer place-items-center text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] transition-opacity duration-200 hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta sm:size-10"
           >
-            <ChevronRightIcon className="size-8" />
+            <ChevronRightIcon className="size-6 sm:size-8" />
           </button>
         </div>
       </div>

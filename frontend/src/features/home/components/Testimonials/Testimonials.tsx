@@ -8,8 +8,12 @@ import { testimonials } from "./items"
 const AUTO_PLAY_MS = 20_000
 
 const getVisibleCount = (width: number) => {
-  if (width < 768) {
-    return 1.35
+  if (width < 640) {
+    return 1.2
+  }
+
+  if (width < 1024) {
+    return 1.55
   }
 
   return 1.85
@@ -71,7 +75,7 @@ export const Testimonials = () => {
       <div className="mx-auto w-[90%] max-w-[1440px] lg:w-[70%]">
         <h2
           id="testimonios-heading"
-          className="mb-10 text-center font-heading text-[1.75rem] font-bold text-primary md:mb-12 md:text-[2.15rem]"
+          className="mb-8 px-1 text-center font-heading text-[1.5rem] font-bold text-primary sm:text-[1.75rem] md:mb-12 md:text-[2.15rem]"
         >
           Lo que dicen de nosotros
         </h2>
@@ -80,7 +84,7 @@ export const Testimonials = () => {
           <div
             ref={viewportRef}
             className={clsx(
-              "relative h-[200px] touch-pan-x overflow-hidden select-none md:h-[280px] lg:h-[320px]",
+              "relative h-[180px] touch-pan-x overflow-hidden select-none sm:h-[220px] md:h-[280px] lg:h-[320px]",
               isDragging ? "cursor-grabbing" : "cursor-grab",
             )}
             onPointerDown={handlePointerDown}
@@ -124,7 +128,7 @@ export const Testimonials = () => {
             type="button"
             aria-label="Testimonio anterior"
             onClick={goToPrevious}
-            className="absolute top-1/2 left-[1%] z-10 grid size-10 -translate-y-1/2 cursor-pointer place-items-center rounded-full bg-white/90 text-heading shadow-md transition-opacity duration-200 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta md:left-[1%]"
+            className="absolute top-1/2 left-1 z-10 grid size-9 -translate-y-1/2 cursor-pointer place-items-center rounded-full bg-white/90 text-heading shadow-md transition-opacity duration-200 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta md:left-[1%] md:size-10"
           >
             <ChevronLeftIcon className="size-5" />
           </button>
@@ -132,20 +136,20 @@ export const Testimonials = () => {
             type="button"
             aria-label="Testimonio siguiente"
             onClick={goToNext}
-            className="absolute top-1/2 right-[1%] z-10 grid size-10 -translate-y-1/2 cursor-pointer place-items-center rounded-full bg-white/90 text-heading shadow-md transition-opacity duration-200 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta md:right-[1%]"
+            className="absolute top-1/2 right-1 z-10 grid size-9 -translate-y-1/2 cursor-pointer place-items-center rounded-full bg-white/90 text-heading shadow-md transition-opacity duration-200 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta md:right-[1%] md:size-10"
           >
             <ChevronRightIcon className="size-5" />
           </button>
         </div>
 
-        <div className="relative mx-auto mt-10 max-w-2xl px-12 text-center md:mt-12 md:px-16">
-          <span className="absolute top-0 left-0 font-serif text-5xl leading-none text-cta md:text-6xl" aria-hidden="true">
+        <div className="relative mx-auto mt-8 max-w-2xl px-8 text-center sm:px-12 md:mt-12 md:px-16">
+          <span className="absolute top-0 left-0 font-serif text-4xl leading-none text-cta sm:text-5xl md:text-6xl" aria-hidden="true">
             “
           </span>
-          <span className="absolute top-0 right-0 font-serif text-5xl leading-none text-cta md:text-6xl" aria-hidden="true">
+          <span className="absolute top-0 right-0 font-serif text-4xl leading-none text-cta sm:text-5xl md:text-6xl" aria-hidden="true">
             ”
           </span>
-          <p className="font-heading text-lg font-bold text-primary md:text-xl" aria-live="polite">
+          <p className="font-heading text-base font-bold text-primary sm:text-lg md:text-xl" aria-live="polite">
             {active.name}
           </p>
           <p className="mt-1 text-sm text-body md:text-base">{active.role}</p>

@@ -45,7 +45,7 @@ export const CampusTabs = ({ campuses, selectedId, labelledBy, onSelect }: Campu
       role="tablist"
       aria-labelledby={labelledBy}
       onKeyDown={handleKeyDown}
-      className="flex gap-2 overflow-x-auto p-4 md:w-64 md:flex-col md:overflow-visible md:p-6"
+      className="flex gap-2 overflow-x-auto p-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:w-64 md:flex-col md:overflow-visible md:p-6"
     >
       {campuses.map((campus) => {
         const isSelected = campus.id === selectedId
@@ -61,7 +61,7 @@ export const CampusTabs = ({ campuses, selectedId, labelledBy, onSelect }: Campu
             tabIndex={isSelected ? 0 : -1}
             onClick={() => onSelect(campus.id)}
             className={clsx(
-              "h-10 shrink-0 text-start rounded-full px-4 font-heading text-[0.8rem] leading-none font-semibold tracking-[0.04em] uppercase transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta",
+              "inline-flex h-10 shrink-0 items-center rounded-full px-3 text-start font-heading text-[0.72rem] leading-none font-semibold tracking-[0.04em] uppercase transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta sm:px-4 sm:text-[0.8rem]",
               isSelected
                 ? "bg-white text-primary"
                 : "text-white hover:bg-white/10",

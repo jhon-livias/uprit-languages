@@ -41,7 +41,7 @@ export const Footer = () => {
 
         <nav
           aria-label="Pie de página"
-          className="mt-12 grid w-full grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3"
+          className="mt-12 grid w-full grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3"
         >
           {footerColumns.map((column) => (
             <section key={column.id}>
@@ -97,8 +97,8 @@ export const Footer = () => {
       </div>
 
       <div className="bg-footer-bar">
-        <div className="flex items-center justify-center gap-6 px-4 py-4">
-          <p className="flex flex-col items-center text-center text-xs leading-relaxed text-white/90">
+        <div className="flex flex-col-reverse items-center justify-center gap-4 px-4 py-4 sm:flex-row sm:gap-6">
+          <p className="flex min-w-0 flex-col items-center text-center text-[0.7rem] leading-relaxed text-white/90 sm:text-xs">
             <span>
               © Copyright - Centro de Idiomas de la Universidad Privada de Trujillo {year}
             </span>

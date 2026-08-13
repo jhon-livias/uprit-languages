@@ -8,13 +8,13 @@ export const Brand = ({ href = "/" }: BrandProps) => {
   return (
     <a
       href={href}
-      className="flex items-center gap-4 text-white h-[84px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cta"
+      className="flex h-[64px] items-center gap-3 text-white sm:h-[84px] sm:gap-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cta"
     >
-      <span className="flex flex-col">
-        <span className="font-serif text-[2.15rem] leading-none font-bold tracking-[0.04em] md:text-[2.55rem]">
+      <span className="flex min-w-0 flex-col">
+        <span className="font-serif text-[1.7rem] leading-none font-bold tracking-[0.04em] sm:text-[2.15rem] md:text-[2.55rem]">
           UPRIT
         </span>
-        <span className="mt-1 font-serif text-[1.05rem] leading-none font-medium tracking-[0.42em] md:text-[1.2rem]">
+        <span className="mt-1 font-serif text-[0.88rem] leading-none font-medium tracking-[0.28em] sm:text-[1.05rem] sm:tracking-[0.42em] md:text-[1.2rem]">
           IDIOMAS
         </span>
       </span>
@@ -22,7 +22,7 @@ export const Brand = ({ href = "/" }: BrandProps) => {
       <img
         src={sealUprit}
         alt="Universidad Privada de Trujillo"
-        className="hidden h-14 w-auto sm:block md:h-16"
+        className="hidden h-12 w-auto sm:block md:h-16"
       />
     </a>
   )

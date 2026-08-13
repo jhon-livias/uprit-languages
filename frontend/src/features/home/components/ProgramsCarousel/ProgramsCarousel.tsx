@@ -38,20 +38,20 @@ export const ProgramsCarousel = () => {
   return (
     <section
       aria-labelledby="programas-heading"
-      className="relative overflow-hidden bg-[#ececec] py-10 md:py-14"
+      className="relative overflow-hidden bg-bg py-8 md:py-14"
     >
       <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(#c8c8c8_0.65px,transparent_0.65px)] bg-[size:3px_3px] opacity-50"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(var(--color-primary)_0.65px,transparent_0.65px)] bg-[size:3px_3px] opacity-[0.12]"
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto w-[70%]">
+      <div className="relative mx-auto w-[90%] md:w-[80%] lg:w-[70%]">
         <h2
           id="programas-heading"
-          className="relative mb-8 text-center font-heading text-[1.15rem] tracking-[0.14em] uppercase md:mb-10 md:text-[1.4rem]"
+          className="relative mb-6 px-1 text-center font-heading text-[1.05rem] tracking-[0.12em] uppercase sm:text-[1.15rem] md:mb-10 md:text-[1.4rem]"
         >
-          <span className="font-medium text-program-kicker">Conoce </span>
-          <span className="font-bold text-program-heading">nuestros programas</span>
+          <span className="font-medium text-primary">Conoce </span>
+          <span className="font-bold text-primary">nuestros programas</span>
         </h2>
 
         <div
@@ -59,7 +59,7 @@ export const ProgramsCarousel = () => {
           aria-roledescription="carousel"
           aria-label="Programas del centro de idiomas"
           className={clsx(
-            "relative h-[14vw] touch-pan-x overflow-hidden select-none",
+            "relative h-36 touch-pan-x overflow-hidden select-none sm:h-40 md:h-48 lg:h-[14vw] lg:max-h-[220px]",
             isDragging ? "cursor-grabbing" : "cursor-grab",
           )}
           onPointerDown={handlePointerDown}

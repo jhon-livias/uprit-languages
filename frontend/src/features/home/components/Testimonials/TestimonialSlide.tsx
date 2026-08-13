@@ -41,7 +41,7 @@ export const TestimonialSlide = ({
                 onClick={onPlay}
                 disabled={!testimonial.youtubeId}
                 aria-label={`Reproducir testimonio de ${testimonial.name}`}
-                className="absolute bottom-5 left-1/2 grid size-14 -translate-x-1/2 place-items-center rounded-full bg-black/60 text-white transition-opacity duration-200 hover:bg-black/75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta disabled:cursor-default"
+                className="absolute bottom-4 left-1/2 grid size-12 -translate-x-1/2 place-items-center rounded-full bg-black/60 text-white transition-opacity duration-200 hover:bg-black/75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta disabled:cursor-default sm:bottom-5 sm:size-14"
               >
                 <PlayIcon className="ml-0.5 size-6" />
               </button>

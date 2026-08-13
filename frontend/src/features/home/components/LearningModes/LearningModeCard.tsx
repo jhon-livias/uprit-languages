@@ -40,10 +40,10 @@ export const LearningModeCard = ({ title, href, src, alt, tone }: LearningModeCa
       href={href}
       className="group flex h-full flex-col overflow-hidden rounded-[1.5rem] bg-white shadow-[0_8px_24px_rgba(17,24,34,0.08)] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cta"
     >
-      <img src={src} alt={alt} className="h-[220px] w-full object-cover object-center md:h-[250px]" />
+      <img src={src} alt={alt} className="h-[200px] w-full object-cover object-center sm:h-[220px] md:h-[250px]" />
       <span
         className={clsx(
-          "flex min-h-14 items-center justify-between gap-3 px-4 py-3 font-heading text-[0.95rem] leading-tight font-bold md:text-[1.05rem]",
+          "flex min-h-14 items-center justify-between gap-3 px-3 py-3 font-heading text-[0.88rem] leading-tight font-bold sm:px-4 sm:text-[0.95rem] md:text-[1.05rem]",
           barToneClass[tone],
         )}
       >

@@ -9,7 +9,7 @@ type MainLayoutProps = {
 
 export const MainLayout = ({ children, activeHref = "/" }: MainLayoutProps) => {
   return (
-    <div className="flex min-h-svh flex-col bg-bg">
+    <div className="flex min-h-svh flex-col overflow-x-hidden bg-bg">
       <Header activeHref={activeHref} />
       <main id="contenido" className="flex-1">
         {children}
