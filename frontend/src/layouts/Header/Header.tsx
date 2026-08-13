@@ -38,7 +38,7 @@ const EnrollButton = ({ className }: { className?: string }) => {
     <a
       href={headerActions.enroll.href}
       className={clsx(
-        "inline-flex h-[27px] max-h-[27px] items-center gap-2 rounded-full bg-cta py-0 pr-0.5 pl-3 text-[10px] font-bold tracking-[0.06em] text-cta-fg uppercase transition duration-200 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+        "h-[27px] max-h-[27px] items-center gap-2 rounded-full bg-cta py-0 pr-0.5 pl-3 text-[10px] font-bold tracking-[0.06em] text-cta-fg uppercase transition duration-200 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
         className,
       )}
     >
@@ -108,12 +108,12 @@ export const Header = ({ activeHref = "/" }: HeaderProps) => {
       </a>
 
       <div className={`relative z-20 ${layoutContainerClass}`}>
-        <div className="flex items-center justify-between gap-3 py-3 sm:items-start sm:gap-4 sm:py-4">
+        <div className="flex items-center justify-between gap-3 py-3 sm:gap-4 sm:py-4">
           <Brand />
 
-          <div className="flex max-h-[27px] shrink-0 items-center justify-start gap-2 sm:items-start sm:gap-2.5">
-            <EnrollButton className="hidden sm:inline-flex" />
-            <div className="hidden max-h-[27px] items-center gap-2 sm:flex">
+          <div className="flex shrink-0 items-center justify-start gap-2 sm:gap-2.5">
+            <EnrollButton className="hidden xl:flex" />
+            <div className="hidden items-center gap-2 xl:flex">
               <IconLink href={headerActions.home.href} label={headerActions.home.label} className="size-[27px]">
                 <HomeIcon className="h-[18px] w-[17px]" />
               </IconLink>
@@ -127,13 +127,13 @@ export const Header = ({ activeHref = "/" }: HeaderProps) => {
             </div>
             <button
               type="button"
-              className={clsx(iconBoxClass, "size-[27px] xl:hidden")}
+              className="grid size-9 shrink-0 place-items-center text-white transition-opacity duration-200 hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta xl:hidden"
               aria-label={isMenuOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación"}
               aria-expanded={isMenuOpen}
               aria-controls={menuId}
               onClick={() => setIsMenuOpen((open) => !open)}
             >
-              {isMenuOpen ? <CloseIcon className="size-4" /> : <MenuIcon className="size-4" />}
+              {isMenuOpen ? <CloseIcon className="size-6" /> : <MenuIcon className="size-7" />}
             </button>
           </div>
         </div>
@@ -192,7 +192,7 @@ export const Header = ({ activeHref = "/" }: HeaderProps) => {
           </button>
         </div>
 
-        <EnrollButton className="self-start" />
+        <EnrollButton className="flex self-start" />
 
         <ul className="flex flex-col gap-5">
           {navItems.map((item) => {

@@ -4,7 +4,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "./icons"
 import { heroSlides } from "./slides"
 
 const AUTO_PLAY_MS = 20_000
-const DRAG_CLICK_THRESHOLD_PX = 6
+const DRAG_CLICK_THRESHOLD_PX = 10
 const SNAP_DISTANCE = 0.18
 const SNAP_VELOCITY = 0.35
 
@@ -33,7 +33,9 @@ export const HeroBanner = () => {
 
   const isAnimatingRef = useRef(false)
   const isDraggingRef = useRef(false)
+  const isPointerDownRef = useRef(false)
   const dragStartXRef = useRef(0)
+  const dragStartYRef = useRef(0)
   const dragStartedAtRef = useRef(0)
   const trackIndexRef = useRef(1)
   const viewportWidthRef = useRef(0)
@@ -104,6 +106,24 @@ export const HeroBanner = () => {
   }, [])
 
   useEffect(() => {
+    const viewport = viewportRef.current
+
+    if (!viewport) {
+      return
+    }
+
+    const preventVerticalScrollWhileDragging = (event: TouchEvent) => {
+      if (isDraggingRef.current) {
+        event.preventDefault()
+      }
+    }
+
+    viewport.addEventListener("touchmove", preventVerticalScrollWhileDragging, { passive: false })
+
+    return () => viewport.removeEventListener("touchmove", preventVerticalScrollWhileDragging)
+  }, [])
+
+  useEffect(() => {
     if (enableTransition || isDragging) {
       return
     }
@@ -136,31 +156,59 @@ export const HeroBanner = () => {
       return
     }
 
-    isDraggingRef.current = true
-    isAnimatingRef.current = false
+    isPointerDownRef.current = true
+    isDraggingRef.current = false
     dragStartXRef.current = event.clientX
+    dragStartYRef.current = event.clientY
     dragStartedAtRef.current = Date.now()
-    setIsDragging(true)
-    setEnableTransition(false)
     setDragOffset(0)
-    event.currentTarget.setPointerCapture(event.pointerId)
   }
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (!isDraggingRef.current) {
+    if (!isPointerDownRef.current) {
       return
     }
 
-    setDragOffset(event.clientX - dragStartXRef.current)
+    const deltaX = event.clientX - dragStartXRef.current
+    const deltaY = event.clientY - dragStartYRef.current
+
+    if (!isDraggingRef.current) {
+      if (Math.hypot(deltaX, deltaY) < DRAG_CLICK_THRESHOLD_PX) {
+        return
+      }
+
+      if (Math.abs(deltaY) > Math.abs(deltaX)) {
+        isPointerDownRef.current = false
+        return
+      }
+
+      isDraggingRef.current = true
+      isAnimatingRef.current = false
+      setIsDragging(true)
+      setEnableTransition(false)
+      event.currentTarget.setPointerCapture(event.pointerId)
+    }
+
+    setDragOffset(deltaX)
   }
 
   const finishDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (!isDraggingRef.current) {
+    if (!isPointerDownRef.current) {
       return
     }
 
+    isPointerDownRef.current = false
+    const wasDragging = isDraggingRef.current
     isDraggingRef.current = false
     setIsDragging(false)
+
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId)
+    }
+
+    if (!wasDragging) {
+      return
+    }
 
     const width = viewportWidthRef.current
     const delta = event.clientX - dragStartXRef.current
@@ -188,10 +236,6 @@ export const HeroBanner = () => {
     setTrackIndex(nextIndex)
     setDragOffset(0)
     setResumeToken((token) => token + 1)
-
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId)
-    }
   }
 
   const translateX =
@@ -204,13 +248,14 @@ export const HeroBanner = () => {
       <div
         ref={viewportRef}
         className={clsx(
-          "relative h-[240px] touch-pan-x overflow-hidden select-none sm:h-[320px] md:h-[440px] lg:h-[520px]",
-          isDragging ? "cursor-grabbing" : "cursor-grab",
+          "relative h-[240px] overflow-hidden select-none sm:h-[320px] md:h-[440px] lg:h-[520px]",
+          isDragging ? "cursor-grabbing touch-none" : "cursor-grab touch-pan-y",
         )}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={finishDrag}
         onPointerCancel={finishDrag}
+        onLostPointerCapture={finishDrag}
       >
         <div
           className={clsx(
@@ -232,29 +277,32 @@ export const HeroBanner = () => {
               className="h-full shrink-0"
               style={{ width: `${100 / trackCount}%` }}
             >
-              <img src={item.src} alt={item.alt} draggable={false} className="size-full object-cover object-center" />
+              <img
+                src={item.src}
+                alt={item.alt}
+                draggable={false}
+                className="pointer-events-none size-full object-cover object-center [-webkit-user-drag:none]"
+              />
             </div>
           ))}
         </div>
 
-        <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-between px-2 sm:px-3 md:px-5">
-          <button
-            type="button"
-            aria-label="Imagen anterior"
-            onClick={goToPrevious}
-            className="pointer-events-auto grid size-8 cursor-pointer place-items-center text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] transition-opacity duration-200 hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta sm:size-10"
-          >
-            <ChevronLeftIcon className="size-6 sm:size-8" />
-          </button>
-          <button
-            type="button"
-            aria-label="Imagen siguiente"
-            onClick={goToNext}
-            className="pointer-events-auto grid size-8 cursor-pointer place-items-center text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] transition-opacity duration-200 hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta sm:size-10"
-          >
-            <ChevronRightIcon className="size-6 sm:size-8" />
-          </button>
-        </div>
+        <button
+          type="button"
+          aria-label="Imagen anterior"
+          onClick={goToPrevious}
+          className="absolute top-1/2 left-2 z-20 grid size-8 -translate-y-1/2 cursor-pointer place-items-center text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] transition-opacity duration-200 hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta sm:left-3 sm:size-10 md:left-5"
+        >
+          <ChevronLeftIcon className="size-6 sm:size-8" />
+        </button>
+        <button
+          type="button"
+          aria-label="Imagen siguiente"
+          onClick={goToNext}
+          className="absolute top-1/2 right-2 z-20 grid size-8 -translate-y-1/2 cursor-pointer place-items-center text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] transition-opacity duration-200 hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta sm:right-3 sm:size-10 md:right-5"
+        >
+          <ChevronRightIcon className="size-6 sm:size-8" />
+        </button>
       </div>
     </section>
   )
