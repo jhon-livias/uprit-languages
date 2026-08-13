@@ -192,6 +192,44 @@ export const useDragCarousel = ({
     setOffset((current) => current + cardSpanRef.current)
   }, [wrapToMiddle])
 
+  const goToIndex = useCallback(
+    (index: number) => {
+      if (
+        isDraggingRef.current ||
+        isPointerDownRef.current ||
+        isAnimatingRef.current ||
+        cardSpanRef.current === 0 ||
+        itemCount === 0
+      ) {
+        return
+      }
+
+      const span = cardSpanRef.current
+      const currentLogical = Math.round(-offsetRef.current / span)
+      const currentWrapped = ((currentLogical % itemCount) + itemCount) % itemCount
+      const target = ((index % itemCount) + itemCount) % itemCount
+      const delta = target - currentWrapped
+
+      if (delta === 0) {
+        return
+      }
+
+      const nextOffset = offsetRef.current - delta * span
+
+      if (reduceMotionRef.current) {
+        setOffset(wrapToMiddle(nextOffset, span))
+        setResumeToken((token) => token + 1)
+        return
+      }
+
+      isAnimatingRef.current = true
+      setEnableTransition(true)
+      setOffset(nextOffset)
+      setResumeToken((token) => token + 1)
+    },
+    [itemCount, wrapToMiddle],
+  )
+
   useEffect(() => {
     if (reduceMotion || cardSpan === 0 || isDragging || isPaused) {
       return
@@ -382,6 +420,7 @@ export const useDragCarousel = ({
     isDragging,
     goToNext,
     goToPrevious,
+    goToIndex,
     handlePointerDown,
     handlePointerMove,
     handlePointerUp: finishDrag,
