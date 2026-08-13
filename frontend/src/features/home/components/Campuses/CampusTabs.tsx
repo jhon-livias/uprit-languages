@@ -61,14 +61,13 @@ export const CampusTabs = ({ campuses, selectedId, labelledBy, onSelect }: Campu
             tabIndex={isSelected ? 0 : -1}
             onClick={() => onSelect(campus.id)}
             className={clsx(
-              "flex shrink-0 items-center gap-2 rounded-full px-4 py-2.5 text-left font-heading text-[0.8rem] font-semibold tracking-[0.04em] uppercase transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta",
+              "h-10 shrink-0 text-start rounded-full px-4 font-heading text-[0.8rem] leading-none font-semibold tracking-[0.04em] uppercase transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta",
               isSelected
                 ? "bg-white text-primary"
                 : "text-white hover:bg-white/10",
             )}
           >
-            {isSelected && <HomePinIcon className="size-4 shrink-0" />}
-            <span>{campus.name}</span>
+            {campus.name}
           </button>
         )
       })}
