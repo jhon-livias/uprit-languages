@@ -1,3 +1,4 @@
+import { Campuses, PrivateClassesCta } from "../components/Campuses"
 import { HeroBanner } from "../components/HeroBanner"
 import { LearningModes } from "../components/LearningModes"
 import { ProgramsCarousel } from "../components/ProgramsCarousel"
@@ -12,6 +13,8 @@ export const HomePage = () => {
       <ScheduleSearch />
       <LearningModes />
       <Testimonials />
+      <Campuses />
+      <PrivateClassesCta />
     </>
   )
 }
