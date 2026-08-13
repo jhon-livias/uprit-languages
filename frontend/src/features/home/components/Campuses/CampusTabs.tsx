@@ -1,5 +1,4 @@
 import clsx from "clsx"
-import { HomePinIcon } from "./icons"
 import type { Campus } from "./items"
 import type { KeyboardEvent } from "react"
 
